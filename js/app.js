@@ -17,8 +17,8 @@ class UI {
   }
   // submit budget method
   submitBudgetForm() {
-    const value = this.budgetInput.value;
-    if (value === '' || value < 0) {
+    const value = parseFloat(this.budgetInput.value);
+    if (value === '' || value < 0 || isNaN(value)) {
       this.budgetFeedback.classList.add('showItem');
       this.budgetFeedback.innerHTML = '<p>Value Cannot Be Empty Or Negative</p>';
       const self = this;
@@ -27,7 +27,7 @@ class UI {
       }, 4000);
     }
     else {
-      this.budgetAmount.textContent = value;
+      this.budgetAmount.textContent = value.toFixed(2);
       this.budgetInput.value = '';
       this.showBalance();
     }
@@ -36,8 +36,8 @@ class UI {
   // show balance
   showBalance() {
     const expense = this.totalExpense();
-    const total = parseInt(this.budgetAmount.textContent) - expense;
-    this.balanceAmount.textContent = total;
+    const total = parseFloat(this.budgetAmount.textContent) - expense;
+    this.balanceAmount.textContent = total.toFixed(2);
     if (total < 0) {
       this.balance.classList.remove('showGreen', 'showBlack');
       this.balance.classList.add('showRed');
@@ -65,14 +65,14 @@ class UI {
       }, 4000)
     }
     else {
-      let amount = parseInt(amountValue);
+      let amount = parseFloat(amountValue);
       this.expenseInput.value = '';
       this.amountInput.value = '';
       // expense object to add it to the list in UI class
       let expense = {
         id:this.itemID,
         title:expenseValue,
-        amount:amount,
+        amount:amount.toFixed(2)
       }
       this.itemID++
       this.itemList.push(expense);
@@ -89,7 +89,7 @@ class UI {
         <div class="expense-item d-flex justify-content-between align-items-baseline">
 
          <h6 class="expense-title mb-0 text-uppercase list-item">- ${expense.title}</h6>
-         <h5 class="expense-amount mb-0 list-item">${expense.amount}</h5>
+         <h5 class="expense-amount mb-0 list-item">${expense.amount.toFixed(2)}</h5>
 
          <div class="expense-icons list-item">
 
@@ -116,7 +116,7 @@ class UI {
       }, 0);
     }
     this.expenseAmount.textContent = total;
-    return total;
+    return total.toFixed(2);
   }
 
   // edit expense
@@ -130,7 +130,7 @@ class UI {
     });
     // show value
     this.expenseInput.value = expense[0].title;
-    this.amountInput.value = expense[0].amount;
+    this.amountInput.value = expense[0].amount.toFixed(2);
     // remove from list
     let tmpList = this.itemList.filter(function(item) {
       return item.id !== id;

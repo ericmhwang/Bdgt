@@ -1,2 +1,2 @@
-# BudgetPlus
-Budget Tracking app with QT
+# BJET
+Budget Tracking app with JS

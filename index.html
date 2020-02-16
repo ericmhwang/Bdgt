@@ -33,7 +33,7 @@
       <form id="budget-form" class=" budget-form">
        <h5 class="text-capitalize">please enter your budget</h5>
        <div class="form-group">
-        <input type="number" class="form-control budget-input" id="budget-input">
+        <input type="number" step="any" class="form-control budget-input" id="budget-input">
        </div>
        <!-- submit button -->
        <button type="submit" class="btn text-capitalize budget-submit" id="budget-submit">calculate</button>
@@ -67,13 +67,17 @@
       <div class="expense-feedback alert alert-danger text-capitalize">expense feedback</div>
       <!-- expense form -->
       <form id="expense-form" class=" expense-form">
-       <h5 class="text-capitalize">please enter your expense</h5>
+       <h5 class="text-capitalize"> enter date</h5>
+       <div class="form-group">
+        <input type="date" class="form-control expense-input" id="date-input">
+       </div>
+       <h5 class="text-capitalize">enter your expense</h5>
        <div class="form-group">
         <input type="text" class="form-control expense-input" id="expense-input">
        </div>
-       <h5 class="text-capitalize">please enter expense amount</h5>
+       <h5 class="text-capitalize">enter expense amount</h5>
        <div class="form-group">
-        <input type="number" class="form-control expense-input" id="amount-input">
+        <input type="number" step="any" class="form-control expense-input" id="amount-input">
        </div>
        <!-- submit button -->
        <button type="submit" class="btn text-capitalize expense-submit" id="expense-submit">add expense</button>
@@ -84,9 +88,10 @@
       <div class="expense-list" id="expense-list">
 
        <div class="expense-list__info d-flex justify-content-between text-capitalize">
-        <h5 class="list-item">expense title</h5>
-        <h5 class="list-item">expense value</h5>
-        <h5 class="list-item"></h5>
+        <h5 class="list-item">date</h5>
+        <h5 class="list-item">category</h5>
+        <h5 class="list-item">title</h5>
+        <h5 class="list-item">value</h5>
        </div>
        <!-- single expense -->
 
