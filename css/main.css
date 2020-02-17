@@ -51,7 +51,8 @@ body {
   border: 0.05rem solid var(--mainRed) !important;
 }
 .expense-amount,
-.expense-title {
+.expense-title,
+.expense-date {
   color: var(--mainRed);
 }
 .edit-icon {

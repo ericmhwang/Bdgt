@@ -9,6 +9,11 @@ class UI {
     this.balance = document.getElementById("balance");
     this.balanceAmount = document.getElementById("balance-amount");
     this.expenseForm = document.getElementById("expense-form");
+    // date functionality needed
+    this.expenseDate = document.getElementById("expense-date");
+    // this is for the category; make a dropdown for the category list. may need another list for
+    // categories of expenses
+    //this.expenseCat = document.getElementById();
     this.expenseInput = document.getElementById("expense-input");
     this.amountInput = document.getElementById("amount-input");
     this.expenseList = document.getElementById("expense-list");
@@ -72,6 +77,7 @@ class UI {
       let expense = {
         id:this.itemID,
         title:expenseValue,
+        date:this.expenseDate,
         amount:amount.toFixed(2)
       }
       this.itemID++
