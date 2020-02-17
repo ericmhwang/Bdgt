@@ -10,7 +10,7 @@ class UI {
     this.balanceAmount = document.getElementById("balance-amount");
     this.expenseForm = document.getElementById("expense-form");
     // date functionality needed
-    this.expenseDate = document.getElementById("expense-date");
+    this.expenseDate = document.getElementById("date-input");
     // this is for the category; make a dropdown for the category list. may need another list for
     // categories of expenses
     //this.expenseCat = document.getElementById();
@@ -59,8 +59,9 @@ class UI {
 
   // submit expense form
   submitExpenseForm() {
+    const dateValue = this.expenseDate.value;
     const expenseValue = this.expenseInput.value;
-    const amountValue = this.amountInput.value;
+    const amountValue = parseFloat(this.amountInput.value);
     if (expenseValue === '' || amountValue === '' || amountValue < 0) {
       this.expenseFeedback.classList.add('showItem');
       this.expenseFeedback.innerHTML = '<p>values cannot be empty or negative</p>';
@@ -71,14 +72,17 @@ class UI {
     }
     else {
       let amount = parseFloat(amountValue);
+      amount = amount.toFixed(2);
+      amount = parseFloat(amount);
       this.expenseInput.value = '';
       this.amountInput.value = '';
+      this.expenseDate.value = '';
       // expense object to add it to the list in UI class
       let expense = {
         id:this.itemID,
         title:expenseValue,
-        date:this.expenseDate,
-        amount:amount.toFixed(2)
+        date:dateValue,
+        amount:amount
       }
       this.itemID++
       this.itemList.push(expense);
@@ -90,12 +94,14 @@ class UI {
   // add expense
   addExpense(expense) {
     const div = document.createElement('div');
+    const expenseAmount = expense.amount.toFixed(2);
     div.classList.add('expense');
     div.innerHTML = `
         <div class="expense-item d-flex justify-content-between align-items-baseline">
 
-         <h6 class="expense-title mb-0 text-uppercase list-item">- ${expense.title}</h6>
-         <h5 class="expense-amount mb-0 list-item">${expense.amount.toFixed(2)}</h5>
+         <h6 class="expense-date mb-0 list-item">${expense.date}</h6>
+         <h6 class="expense-title mb-0 text-uppercase list-item">${expense.title}</h6>
+         <h5 class="expense-amount mb-0 list-item">-${expenseAmount}</h5>
 
          <div class="expense-icons list-item">
 
@@ -113,21 +119,24 @@ class UI {
 
   // total expense
   totalExpense() {
-    let total = 0;
+    let total = parseFloat('0');
     if (this.itemList.length > 0) {
       total = this.itemList.reduce(function(acc, curr) {
         console.log(`Total is: ${acc} and the current value is: ${curr.amount}`);
+        console.log(typeof curr.amount);
         acc += curr.amount;
         return acc;
       }, 0);
     }
-    this.expenseAmount.textContent = total;
-    return total.toFixed(2);
+    total = parseFloat(total);
+    //console.log(typeof total);
+    this.expenseAmount.textContent = total.toFixed(2);
+    return total;
   }
 
   // edit expense
   editExpense(element) {
-    let id = parseFloat(element.dataset.id);
+    let id = parseInt(element.dataset.id);
     let parent = element.parentElement.parentElement.parentElement;
     // remove from dom
     this.expenseList.removeChild(parent);
@@ -135,6 +144,7 @@ class UI {
       return item.id === id;
     });
     // show value
+    this.expenseDate.value = expense[0].date;
     this.expenseInput.value = expense[0].title;
     this.amountInput.value = expense[0].amount.toFixed(2);
     // remove from list
@@ -151,10 +161,13 @@ class UI {
     let parent = element.parentElement.parentElement.parentElement;
     // remove from dom
     this.expenseList.removeChild(parent);
-    let expense = this.itemList.filter(function(item) {
-      return item.id === id;
+    let tmpList = this.itemList.filter(function(item) {
+      return item.id !== id;
     });
+    this.itemList = tmpList;
+    this.showBalance();
   }
+  
 }
 
 function eventListeners() {
@@ -187,8 +200,6 @@ function eventListeners() {
     }
   });
 }
-
-
 
 
 document.addEventListener('DOMContentLoaded', function() {
