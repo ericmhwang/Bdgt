@@ -55,6 +55,10 @@ body {
 .expense-date {
   color: var(--mainRed);
 }
+.dropdown {
+  /*border: 0.1rem solid var(--mainRed);*/
+  padding-bottom: 0.8rem;
+}
 .edit-icon {
   color: var(--mainBlue);
   cursor: pointer;

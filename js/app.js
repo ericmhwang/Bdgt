@@ -101,7 +101,7 @@ class UI {
 
          <h6 class="expense-date mb-0 list-item">${expense.date}</h6>
          <h6 class="expense-title mb-0 text-uppercase list-item">${expense.title}</h6>
-         <h5 class="expense-amount mb-0 list-item">-${expenseAmount}</h5>
+         <h5 class="expense-amount mb-0 list-item">-$${expenseAmount}</h5>
 
          <div class="expense-icons list-item">
 

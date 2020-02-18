@@ -31,7 +31,7 @@
       <div class="budget-feedback alert alert-danger text-capitalize">budget feedback</div>
       <!-- budget form -->
       <form id="budget-form" class=" budget-form">
-       <h5 class="text-capitalize">enter your budget</h5>
+       <h5 class="text-capitalize">enter income</h5>
        <div class="form-group">
         <input type="number" step="any" class="form-control budget-input" id="budget-input">
        </div>
@@ -43,7 +43,7 @@
       <!-- app info -->
       <div class="row my-3">
        <div class="col-4 text-center mb-2">
-        <h6 class="text-uppercase info-title">budget</h6>
+        <h6 class="text-uppercase info-title">income</h6>
         <span class="budget-icon"><i class="fas fa-money-bill-alt"></i></span>
         <h4 class="text-uppercase mt-2 budget" id="budget"><span>$ </span><span id="budget-amount">0</span></h4>
        </div>
@@ -60,7 +60,6 @@
       </div>
      </div>
     </div>
-
     <div class="row">
      <div class="col-md-5 my-3">
       <!-- expense feedback -->
@@ -71,6 +70,21 @@
        <div class="form-group">
         <input type="date" class="form-control expense-input" id="date-input">
        </div>
+       <div class="dropdown">
+        <div class="input-group">
+            <div class="input-group-prepend">
+              <button type="button" class="btn btn-danger dropdown-toggle text-capitalize expense-submit" id="dropdown-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Choose Category
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdown-menu">
+                <a class="dropdown-item" href="#">Rent</a>
+                <a class="dropdown-item" href="#">Grocery</a>
+                <a class="dropdown-item" href="#">Hydro</a>
+              </div>
+            </div>
+            <input type="text" class="form-control" id="category-input">
+          </div>
+        </div>
        <h5 class="text-capitalize">enter expense title</h5>
        <div class="form-group">
         <input type="text" class="form-control expense-input" id="expense-input">
