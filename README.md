@@ -20,5 +20,5 @@ This field is used to accept only numbers to record the amount of each expense.
 ## Expense List
 This table will show the entries of expenses with the associated category, title, amount and two buttons that allows modification to each entry. By clikcing a blue edit icon, the entires can be editted, and by clikcing on red trashcan icon, entries are deleted off of the menu. Total balance and expenses amount change based on the modification.
 
-# 3 Balance
+# 3. Balance
 This is to display the total budget - total expenses.
