@@ -13,10 +13,12 @@ class UI {
     this.expenseDate = document.getElementById("date-input");
     // this is for the category; make a dropdown for the category list. may need another list for
     // categories of expenses
-    //this.expenseCat = document.getElementById();
+    this.expenseCat = document.getElementById("category-input");
+    this.categoryList = document.getElementById("dropdown-menu")
     this.expenseInput = document.getElementById("expense-input");
     this.amountInput = document.getElementById("amount-input");
     this.expenseList = document.getElementById("expense-list");
+    this.catLst = [];
     this.itemList = [];
     this.itemID = 0;
   }
@@ -60,9 +62,10 @@ class UI {
   // submit expense form
   submitExpenseForm() {
     const dateValue = this.expenseDate.value;
+    const catValue = this.expenseCat.value;
     const expenseValue = this.expenseInput.value;
     const amountValue = parseFloat(this.amountInput.value);
-    if (expenseValue === '' || amountValue === '' || amountValue < 0) {
+    if (expenseValue === '' || amountValue === '' || amountValue < 0 || catValue === '' || dateValue === '') {
       this.expenseFeedback.classList.add('showItem');
       this.expenseFeedback.innerHTML = '<p>values cannot be empty or negative</p>';
       const self = this;
@@ -77,16 +80,19 @@ class UI {
       this.expenseInput.value = '';
       this.amountInput.value = '';
       this.expenseDate.value = '';
+      this.expenseCat.value = '';
       // expense object to add it to the list in UI class
       let expense = {
         id:this.itemID,
         title:expenseValue,
         date:dateValue,
+        category:catValue,
         amount:amount
       }
       this.itemID++
       this.itemList.push(expense);
       this.addExpense(expense);
+      this.addCat(catValue);
       this.showBalance();
     }
   }
@@ -100,7 +106,8 @@ class UI {
         <div class="expense-item d-flex justify-content-between align-items-baseline">
 
          <h6 class="expense-date mb-0 list-item">${expense.date}</h6>
-         <h6 class="expense-title mb-0 text-uppercase list-item">${expense.title}</h6>
+         <h6 class="expense-category mb-0 list-item">${expense.category}</h6>
+         <h6 class="expense-title mb-0 list-item">${expense.title}</h6>
          <h5 class="expense-amount mb-0 list-item">-$${expenseAmount}</h5>
 
          <div class="expense-icons list-item">
@@ -115,6 +122,19 @@ class UI {
         </div>
     `;
     this.expenseList.appendChild(div);
+  }
+
+  addCat(category) {
+    const div = document.createElement('div');
+    const val = category.textContent;
+    if (!this.catLst.includes(val)) {
+    
+    div.innerHTML = `
+    <div class="dropdown-item href="#">${category}</div>
+    `
+    this.categoryList.appendChild(div);
+    this.catLst.push(val);
+    }
   }
 
   // total expense
@@ -147,6 +167,7 @@ class UI {
     this.expenseDate.value = expense[0].date;
     this.expenseInput.value = expense[0].title;
     this.amountInput.value = expense[0].amount.toFixed(2);
+    this.expenseCat.value = expense[0].category;
     // remove from list
     let tmpList = this.itemList.filter(function(item) {
       return item.id !== id;
@@ -168,12 +189,16 @@ class UI {
     this.showBalance();
   }
   
+  catPressed(category) {
+    this.expenseCat.value = category.textContent;
+  }
 }
 
 function eventListeners() {
   const budgetForm = document.getElementById('budget-form');
   const expenseForm = document.getElementById('expense-form');
   const expenseList = document.getElementById('expense-list');
+  const categoryList = document.getElementById('dropdown-menu');
 
   // new instance of UI class
   const ui = new UI();
@@ -199,6 +224,11 @@ function eventListeners() {
       ui.deleteExpense(event.target.parentElement);
     }
   });
+
+  // category click
+  categoryList.addEventListener('click', function(event) {
+    ui.catPressed(event.target);
+  })
 }
 
 
